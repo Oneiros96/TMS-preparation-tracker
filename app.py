@@ -1,6 +1,5 @@
 from flask import Flask, redirect, render_template, request, session
 from flask_session import Session
-import re
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from python.helpers import login_required, SQLite
@@ -93,8 +92,8 @@ def register():
         # log user in
         user_id = db.execute("SELECT user_id FROM users WHERE username = ?", (request.form["username"],))
         session["user_id"] = user_id[0]
-        database.create_user_comments(user_id[0])
-        database.create_user_posts(user_id[0])
+        database.create_user_comments(user_id[0], db)
+        database.create_user_posts(user_id[0], db)
         return redirect("/")
         
 @app.route("/logout")     

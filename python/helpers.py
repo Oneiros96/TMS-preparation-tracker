@@ -1,6 +1,7 @@
 from functools import wraps
 from flask import session, redirect
 import sqlite3
+import logging
 
 def login_required(f):
     """
@@ -21,9 +22,12 @@ class SQLite:
     def __init__(self, database_file):
         self.database_file = database_file
         self.connection = None
-     
+
+
     def connect(self):
         self.connection = sqlite3.connect(self.database_file)
+    
+
     
     def close(self):
         if self.connection:
@@ -33,6 +37,7 @@ class SQLite:
         # create connection and cursor
         self.connect()
         cursor = self.connection.cursor()
+        cursor.row_factory = sqlite3.Row
         # Check if querry is an prepared statement and execute
         if params:
             cursor.execute(query, params)
@@ -40,7 +45,7 @@ class SQLite:
         else:
             cursor.execute(query)
         print(f"Executed {query} with params: {params}")
-        results = cursor.fetchall()
+        results = [dict(row) for row in cursor.fetchall()]
         # commit and close
         self.connection.commit()
         self.close()

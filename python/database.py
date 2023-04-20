@@ -7,7 +7,7 @@ def create_users(db):
     """ creates users table"""
 
     db.execute(
-        "CREATE TABLE users (user_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, username TEXT NOT NULL, password_hash TEXT NOT NULL, registered_at DATETIME NOT NULL DEFAULT (datetime('now')))"
+        "CREATE TABLE IF NOT EXISTS users (user_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, username TEXT NOT NULL, password_hash TEXT NOT NULL, registered_at DATETIME NOT NULL DEFAULT (datetime('now')))"
         )  
     
 

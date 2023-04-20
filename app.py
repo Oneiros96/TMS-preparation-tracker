@@ -8,8 +8,9 @@ import python.database as database
 # Configure application
 app = Flask(__name__)
 
-# setup db
+# setup db an check if users table exists
 db = database.SQLite("project.db")
+database.create_users(db)
 
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_PERMANENT"] = False

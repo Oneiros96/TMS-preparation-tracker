@@ -26,6 +26,8 @@ class SQLite:
 
     def connect(self):
         self.connection = sqlite3.connect(self.database_file)
+        # TODO implement log instead of print
+        self.connection.set_trace_callback(print)
     
 
     
@@ -37,6 +39,7 @@ class SQLite:
         # create connection and cursor
         self.connect()
         cursor = self.connection.cursor()
+        # To make the output a list of dict's, with the Column names as keys
         cursor.row_factory = sqlite3.Row
         # Check if querry is an prepared statement and execute
         if params:
@@ -44,7 +47,6 @@ class SQLite:
             
         else:
             cursor.execute(query)
-        print(f"Executed {query} with params: {params}")
         results = [dict(row) for row in cursor.fetchall()]
         # commit and close
         self.connection.commit()

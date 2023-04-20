@@ -17,7 +17,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 
- 
+
 @app.after_request
 def after_request(response):
     """Ensure responses aren't cached"""
@@ -69,7 +69,7 @@ def register():
         return render_template("register.html")
     
     if request.method == "POST":
-                 
+
         ### Form validation ###
 
         # Username provided and available        
@@ -91,14 +91,13 @@ def register():
         
         # log user in
         user_id = db.execute("SELECT user_id FROM users WHERE username = ?", (request.form["username"],))
-        session["user_id"] = user_id[0]
-        database.create_user_comments(user_id[0], db)
-        database.create_user_posts(user_id[0], db)
+        
+        session["user_id"] = user_id[0]["user_id"]
+        database.create_user_comments(user_id[0]["user_id"], db)
+        database.create_user_posts(user_id[0]["user_id"], db)
         return redirect("/")
         
 @app.route("/logout")     
 def logout():
     session.clear()
     return redirect("/")
-       
-        

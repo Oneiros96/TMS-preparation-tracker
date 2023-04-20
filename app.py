@@ -49,12 +49,11 @@ def login():
     
     user = db.execute("SELECT * FROM users WHERE username = ?", (request.form["username"],))
     
-    if len(user) != 1 or not check_password_hash(user[0][2], request.form["password"]):
+    if len(user) != 1 or not check_password_hash(user[0]["password_hash"], request.form["password"]):
         return render_template("login.html", alert="Falscher Username oder Passwort.")
     
-    session["user_id"] = user[0][0]
+    session["user_id"] = user[0]["user_id"]
     
-    print(session["user_id"])
     
     return redirect("/")
 

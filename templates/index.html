@@ -9,14 +9,10 @@
 <table class="table-bordered table-dark">
     <thead>
         <tr>
-            <th>Thema</th>
-            <th>Montag</th>
-            <th>Dienstag</th>
-            <th>Mittwoch</th>
-            <th>Donnerstag</th>
-            <th>Freitag</th>
-            <th>Samstag</th>
-            <th>Sonntag</th>
+            <th><button type="button" class="btn arrow left"></button></th>
+            {% for  day in date["week"] %}
+            <th>{{ date["week_days"][loop.index0] }} {{ day }}.{{ date["month"] }}.</th>
+            {% endfor %}
         </tr>
     </thead>
     <tbody>

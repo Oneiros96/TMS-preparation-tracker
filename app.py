@@ -29,8 +29,9 @@ def after_request(response):
 
 @app.route("/")
 @login_required
-def todo():
-    return render_template("index.html")
+def index():
+    weekdays = ("Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag")
+    return render_template("index.html", weekdays=weekdays)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

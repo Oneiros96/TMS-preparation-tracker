@@ -2,7 +2,7 @@ from flask import Flask, redirect, render_template, request, session
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from python.helpers import login_required
+from python.helpers import login_required, today
 import python.database as database
 
 # Configure application
@@ -30,8 +30,10 @@ def after_request(response):
 @app.route("/")
 @login_required
 def index():
-    weekdays = ("Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag")
-    return render_template("index.html", weekdays=weekdays)
+    if not request.method == "POST":
+        date = today()
+        print(date)
+        return render_template("index.html", date=date)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

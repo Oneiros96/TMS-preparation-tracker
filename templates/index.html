@@ -9,8 +9,9 @@
 <table class="table-bordered table-dark">
     <thead>
         <tr>
-            {% for day in weekdays %}
-            <th>{{ day }}</th>
+            <th><button type="button" class="btn arrow left"></button></th>
+            {% for  day in date["week"] %}
+            <th>{{ date["week_days"][loop.index0] }} {{ day }}.{{ date["month"] }}.</th>
             {% endfor %}
         </tr>
     </thead>

@@ -17,26 +17,26 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
-def today():
-    today = datetime.date.today()
-    formated_month = "{:02d}".format(today.month)
-    date = {
-        "year": today.year,
-        "month":formated_month,
-        "day": today.day,
+def get_days_in_week(date=None):
+    if date == None:
+        date = datetime.date.today()
+    days_in_week = {
+        "year": date.year,
+        "month": [],
+        "day": [],
         "week_days": ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"]
     }
-    date["week"] = get_week(date)
-    return(date)
+    # Get the day of the week (Monday = 0, Sunday = 6)
+    weekday = date.weekday()
+        # Calculate the start and end dates of the week
+    start_date = date - datetime.timedelta(weekday)
+    end_date = start_date + datetime.timedelta(6)
+        # Generate a list of all the days in the week
+    current_date = start_date
 
-def get_week(date):    
-
-
-    obj = calendar.monthcalendar(date["year"], int(date["month"]))
-
-    for week in obj:
-        for day in week:
-            if date["day"] == day:
-                return (week)
-
-
+    while current_date <= end_date:
+        days_in_week["day"].append(current_date.day)
+        days_in_week["month"].append(current_date.month)
+        current_date += datetime.timedelta(days=1)
+    
+    return(days_in_week)

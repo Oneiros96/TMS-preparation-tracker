@@ -2,8 +2,9 @@ from flask import Flask, redirect, render_template, request, session
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from python.helpers import login_required, today
+from python.helpers import login_required, get_days_in_week
 import python.database as database
+import datetime
 
 # Configure application
 app = Flask(__name__)
@@ -27,13 +28,20 @@ def after_request(response):
     response.headers["Pragma"] = "no-cache"
     return response
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 @login_required
 def index():
+    # user reached route via get
     if not request.method == "POST":
-        date = today()
-        print(date)
-        return render_template("index.html", date=date)
+        date = get_days_in_week()
+        date_value = datetime.date.today()
+    
+
+    if request.method == "POST":
+        date_value = request.form["date"]
+        requested_date = datetime.datetime.strptime(request.form["date"], "%Y-%m-%d")
+        date = get_days_in_week(requested_date) 
+    return render_template("index.html", date=date, date_value=date_value)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

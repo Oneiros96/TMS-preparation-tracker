@@ -1,10 +1,12 @@
 from flask import Flask, redirect, render_template, request, session
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
+import datetime
 
 from python.helpers import login_required, get_days_in_week
 import python.database as database
-import datetime
+import python.validate_userinput as validate
+
 
 # Configure application
 app = Flask(__name__)
@@ -43,6 +45,26 @@ def index():
         date = get_days_in_week(requested_date) 
     return render_template("index.html", date=date, date_value=date_value)
 
+@app.route("/submit", methods=["POST"])
+@login_required
+def submit(): 
+    """ Writes user Post to the database """ 
+    temp = request.form
+    print(temp)
+    themas = ("Muster zuordnen",
+              "Quantitative und formlae Probleme",
+              "Schlauchfiguren",
+              "Med./Naturw. Grundverständnis",
+              "Figuren lernen",
+              "Fakten lernen",
+              "Textverständnis",
+              "Diagramme und Tablellen")
+   
+
+    
+    print("passed")
+    return redirect("/")
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """ Log user in """
@@ -54,20 +76,19 @@ def login():
         return render_template("login.html")
     # User trys to log in
     if request.method == "POST":
-        if not request.form["username"]:
-            return render_template("login.html", alert="Bite gib einen Username ein.")
-        if not request.form["password"]:
-            return render_template("login.html", alert="Bitte gib ein Passwort ein.")
+        valid_input, alert_message = validate.login(request.form)
+        if not valid_input:
+            return render_template("login.html", alert=alert_message)
+
+        user = db.execute("SELECT * FROM users WHERE username = ?", (request.form["username"],))
     
-    user = db.execute("SELECT * FROM users WHERE username = ?", (request.form["username"],))
+        if len(user) != 1 or not check_password_hash(user[0]["password_hash"], request.form["password"]):
+            return render_template("login.html", alert="Falscher Username oder Passwort.")
     
-    if len(user) != 1 or not check_password_hash(user[0]["password_hash"], request.form["password"]):
-        return render_template("login.html", alert="Falscher Username oder Passwort.")
-    
-    session["user_id"] = user[0]["user_id"]
+        session["user_id"] = user[0]["user_id"]
     
     
-    return redirect("/")
+        return redirect("/")
 
 @app.route("/register", methods=["GET", "POST"]) 
 def register():
@@ -81,32 +102,21 @@ def register():
     
     if request.method == "POST":
 
-        ### Form validation ###
-
-        # Username provided and available        
-        if not request.form["username"]:
-            return render_template("register.html", alert="Bitte wähle einen Username.")
-        
-        if db.execute("SELECT username FROM users WHERE username = ?", (request.form["username"],)):            
-            return render_template("register.html", alert="Username nicht verfügbar.")
-        
-        # Password provided and match confirmation
-        if not request.form["password"]:
-            return render_template("register.html", alert="Bitte wähle ein Passwort.")
-        if not request.form["password"] == request.form["confirmation"]:
-            return render_template("register.html", alert="Passwort und Bestätigung müssen überein stimmen.")
-
+       valid_input, alert_message = validate.register(request.form)
+       if not valid_input:
+            return render_template("register.html", alert=alert_message)
+       
         # generate password hash and write user to db
-        hash = generate_password_hash(request.form["password"])
-        db.execute("INSERT INTO users (username, password_hash) VALUES (?, ?)", (request.form["username"], hash))
+       hash = generate_password_hash(request.form["password"])
+       db.execute("INSERT INTO users (username, password_hash) VALUES (?, ?)", (request.form["username"], hash))
         
         # log user in
-        user_id = db.execute("SELECT user_id FROM users WHERE username = ?", (request.form["username"],))
+       user_id = db.execute("SELECT user_id FROM users WHERE username = ?", (request.form["username"],))
         
-        session["user_id"] = user_id[0]["user_id"]
-        database.create_user_comments(user_id[0]["user_id"], db)
-        database.create_user_posts(user_id[0]["user_id"], db)
-        return redirect("/")
+       session["user_id"] = user_id[0]["user_id"]
+       database.create_user_comments(user_id[0]["user_id"], db)
+       database.create_user_posts(user_id[0]["user_id"], db)
+       return redirect("/")
         
 @app.route("/logout")     
 def logout():

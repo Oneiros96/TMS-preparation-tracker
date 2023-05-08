@@ -6,7 +6,12 @@
 
 
 {% block main %}
-<table class="table-bordered table-dark">
+{% if alert %}    
+    <div class="alert alert-danger" role="alert">
+    {{ alert }}
+    </div>    
+{% endif %}
+<table class="table-bordered table-dark justify-content-center" >
     <thead>
         <tr>
             <th>
@@ -19,9 +24,132 @@
             <th>{{ date["week_days"][loop.index0] }} {{ day }}.{{ date["month"][loop.index0] }}.</th>
             {% endfor %}
         </tr>
+      
     </thead>
-    <tbody>
-        
+    <tbody style="color:black;">
+        <tr style="background-color: #3bab82;">
+            <td>Muster zuordnen</td>
+            {% for date in date["date"] %}
+            <td>
+                {% for post in user_posts %}
+                    {% if post["day"] == date and post["thema"] == "Muster zuordnen" %}
+                        {{ post["start"] }}-{{ post["end"] }} {{ post["type"] }}                  
+                    {% endif %}
+                {% endfor %}
+            </td>
+            {% endfor %}
+        </tr>
+        <tr style="background-color: #3bab82;">
+            <td>Quantitative und formale Probleme</td>
+            {% for date in date["date"] %}
+            <td>
+                {% for post in user_posts %}
+                    {% if post["day"] == date and post["thema"] == "Quantitative und formale Probleme" %}
+                        {{ post["start"] }}-{{ post["end"] }} {{ post["type"] }}                  
+                    {% endif %}
+                {% endfor %}
+            </td>
+            {% endfor %}
+        </tr>
+        <tr style="background-color: #3bab82;">
+            <td>Schlauchfiguren</td>
+            {% for date in date["date"] %}
+            <td>
+                {% for post in user_posts %}
+                    {% if post["day"] == date and post["thema"] == "Schlauchfiguren" %}
+                        {{ post["start"] }}-{{ post["end"] }} {{ post["type"] }}                  
+                    {% endif %}
+                {% endfor %}
+            </td>
+            {% endfor %}
+        </tr>
+        <tr style="background-color: #3bab82;">
+            <td>Med./Naturw. Grundverständnis</td>
+            {% for date in date["date"] %}
+            <td>
+                {% for post in user_posts %}
+                    {% if post["day"] == date and post["thema"] == "Med./Naturw. Grundverständnis" %}
+                        {{ post["start"] }}-{{ post["end"] }} {{ post["type"] }}                  
+                    {% endif %}
+                {% endfor %}
+            </td>
+            {% endfor %}
+        </tr>
+        <tr style="background-color: #3bab82;">
+            <td>Figuren lernen</td>
+            {% for date in date["date"] %}
+            <td>
+                {% for post in user_posts %}
+                    {% if post["day"] == date and post["thema"] == "Figuren lernen" %}
+                        {{ post["start"] }}-{{ post["end"] }} {{ post["type"] }}                  
+                    {% endif %}
+                {% endfor %}
+            </td>
+            {% endfor %}
+        </tr>
+        <tr style="background-color: #3bab82;">
+            <td>Fakten lernen</td>
+            {% for date in date["date"] %}
+            <td>
+                {% for post in user_posts %}
+                    {% if post["day"] == date and post["thema"] == "Fakten lernen" %}
+                        {{ post["start"] }}-{{ post["end"] }} {{ post["type"] }}                  
+                    {% endif %}
+                {% endfor %}
+            </td>
+            {% endfor %}
+        </tr>
+        <tr style="background-color: #3bab82;">
+            <td>Textverständnis</td>
+            {% for date in date["date"] %}
+            <td>
+                {% for post in user_posts %}
+                    {% if post["day"] == date and post["thema"] == "Textverständnis" %}
+                        {{ post["start"] }}-{{ post["end"] }} {{ post["type"] }}                  
+                    {% endif %}
+                {% endfor %}
+            </td>
+            {% endfor %}
+        </tr>
+        <tr style="background-color: #3bab82;">
+            <td>Diagramme und Tabellen</td>
+            {% for date in date["date"] %}
+            <td>
+                {% for post in user_posts %}
+                    {% if post["day"] == date and post["thema"] == "Diagramme und Tabellen" %}
+                        {{ post["start"] }}-{{ post["end"] }} {{ post["type"] }}                  
+                    {% endif %}
+                {% endfor %}
+            </td>
+            {% endfor %}
+        </tr>
     </tbody>
 </table>
+<div class="container-fluid">
+    <form method="post" action="/submit">   
+        <select class="btn dropdown-toggle" name="thema" id="thema" style="background-color: #3bab82;">
+            <option selected hidden>Wähle ein Thema</option>
+            <option>Muster zuordnen</option>
+            <option>Quantitative und formlae Probleme</option>
+            <option>Schlauchfiguren</option>
+            <option>Med./Naturw. Grundverständnis</option>
+            <option>Figuren lernen</option>
+            <option>Fakten lernen</option>
+            <option>Textverständnis</option>
+            <option>Diagramme und Tablellen</option>
+        </select>
+        <select class="btn droppdown-toggle" name="type" id="type" style="background-color: #3bab82;">
+            <option selected hidden>Wähle die Art der Übung</option>
+            <option>Übung</option>
+            <option>Theorie</option>
+            <option>Simulation</option>
+            <option>Video/Meeting</option>
+            <option>Bootcamp</option>
+        </select>
+        <input type="time" id="start" name="start" style="background-color: #3bab82;">
+        <input type="time" id="end" name="end" style="background-color: #3bab82;">
+        <input type="date" id="day" name="day" style="background-color: #3bab82";>
+        <input type="submit" class="btn" style="background-color: #3bab82;" value="Eintragen">
+    </form>
+</div>
 {% endblock %}

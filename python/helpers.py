@@ -24,7 +24,8 @@ def get_days_in_week(date=None):
         "year": date.year,
         "month": [],
         "day": [],
-        "week_days": ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"]
+        "week_days": ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"],
+        "date": []
     }
     # Get the day of the week (Monday = 0, Sunday = 6)
     weekday = date.weekday()
@@ -37,6 +38,7 @@ def get_days_in_week(date=None):
     while current_date <= end_date:
         days_in_week["day"].append(current_date.day)
         days_in_week["month"].append(current_date.month)
+        days_in_week["date"].append(current_date.strftime("%Y-%m-%d"))
         current_date += datetime.timedelta(days=1)
     
     return(days_in_week)

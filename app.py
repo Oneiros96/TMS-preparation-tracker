@@ -42,27 +42,27 @@ def index():
     if request.method == "POST":
         date_value = request.form["date"]
         requested_date = datetime.datetime.strptime(request.form["date"], "%Y-%m-%d")
-        date = get_days_in_week(requested_date) 
-    return render_template("index.html", date=date, date_value=date_value)
+        date = get_days_in_week(requested_date)
+
+    #get user posts from db
+    table = f"posts_{session['user_id']}" 
+    user_posts = db.execute(f"SELECT * from {table}")  
+    print(user_posts)
+    print(date)   
+    return render_template("index.html", date=date, date_value=date_value, user_posts=user_posts)
 
 @app.route("/submit", methods=["POST"])
 @login_required
 def submit(): 
     """ Writes user Post to the database """ 
-    temp = request.form
-    print(temp)
-    themas = ("Muster zuordnen",
-              "Quantitative und formlae Probleme",
-              "Schlauchfiguren",
-              "Med./Naturw. Grundverständnis",
-              "Figuren lernen",
-              "Fakten lernen",
-              "Textverständnis",
-              "Diagramme und Tablellen")
-   
-
+    valid_input, alert_message = validate.submit(request.form)
+    if not valid_input:
+        date = get_days_in_week()
+        date_value = datetime.date.today()
+        return render_template("index.html", date=date, date_value=date_value, alert= alert_message)
+    table = f"posts_{session['user_id']}"
+    db.execute(f"INSERT INTO {table} (thema, start, end, type, day) VALUES(?, ?, ?, ?, ?)", (request.form["thema"], request.form["start"], request.form["end"], request.form["type"], request.form["day"]))    
     
-    print("passed")
     return redirect("/")
 
 @app.route("/login", methods=["GET", "POST"])

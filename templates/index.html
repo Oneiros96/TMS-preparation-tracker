@@ -4,6 +4,22 @@
     Index
 {% endblock %}
 
+{% block script %}
+<script>
+  // Get the table element
+  const table = document.getElementById("user_table");
+console.log(table)
+  // Get all the table cells
+  const cells = table.getElementsByTagName("td");
+
+  // Loop through all the cells and apply CSS if they are empty
+  for (let i = 0; i < cells.length; i++) {
+    if (cells[i].innerHTML.trim() === "") {
+      cells[i].style.backgroundColor = "#232323";
+    }
+  }
+</script>
+{% endblock %}
 
 {% block main %}
 {% if alert %}    
@@ -11,7 +27,7 @@
     {{ alert }}
     </div>    
 {% endif %}
-<table class="table-bordered table-dark justify-content-center" >
+<table id="user_table" class="table-bordered table-dark justify-content-center" >
     <thead>
         <tr>
             <th>

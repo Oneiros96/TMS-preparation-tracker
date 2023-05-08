@@ -1,5 +1,6 @@
 import os
 import python.database as database
+import datetime
 
 
 def login(userinput):
@@ -26,3 +27,36 @@ def register(userinput):
             return False, "Username nicht verfügbar."
     else:
         return True, ""
+
+def submit(userinput):
+    themas = ("Muster zuordnen",
+              "Quantitative und formlae Probleme",
+              "Schlauchfiguren",
+              "Med./Naturw. Grundverständnis",
+              "Figuren lernen",
+              "Fakten lernen",
+              "Textverständnis",
+              "Diagramme und Tablellen")
+    types = ("Übung",
+             "Theorie",
+             "Simulation",
+             "Video/Meeting",
+             "Bootcamp")
+
+    
+        
+    if not userinput["start"]:
+        return False, "Bitte wähle eine Startzeit."
+    if not userinput["end"]:
+        return False, "Bitte wähle ein ende."
+    if not userinput["day"]:
+        return False, "Bitte wähle ein Datum."
+    if not themas.count(userinput["thema"]):
+        return False, "Bitte wähle ein Thema."
+    if not types.count(userinput["type"]):
+         return False, "Bitte wähle die Art der übung."
+    if not userinput["start"] < userinput["end"]:
+         return False, "Das Ende der Übung kann nicht vor ihrem Anfang liegen"
+    else:
+        return True, ""
+         

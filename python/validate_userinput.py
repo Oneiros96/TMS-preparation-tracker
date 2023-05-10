@@ -55,8 +55,6 @@ def submit_post(userinput):
         return False, "Bitte wähle ein Thema."
     if not types.count(userinput["type"]):
          return False, "Bitte wähle die Art der übung."
-    if not userinput["start"] < userinput["end"]:
-         return False, "Das Ende der Übung kann nicht vor ihrem Anfang liegen"
     else:
         return True, ""
          

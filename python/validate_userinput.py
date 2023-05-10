@@ -28,7 +28,7 @@ def register(userinput):
     else:
         return True, ""
 
-def submit(userinput):
+def submit_post(userinput):
     themas = ("Muster zuordnen",
               "Quantitative und formlae Probleme",
               "Schlauchfiguren",

@@ -51,11 +51,11 @@ def index():
     print(date)   
     return render_template("index.html", date=date, date_value=date_value, user_posts=user_posts)
 
-@app.route("/submit", methods=["POST"])
+@app.route("/submit_post", methods=["POST"])
 @login_required
-def submit(): 
+def submit_post(): 
     """ Writes user Post to the database """ 
-    valid_input, alert_message = validate.submit(request.form)
+    valid_input, alert_message = validate.submit_post(request.form)
     if not valid_input:
         date = get_days_in_week()
         date_value = datetime.date.today()
@@ -122,3 +122,8 @@ def register():
 def logout():
     session.clear()
     return redirect("/")
+
+@app.route("/comments")
+@login_required
+def comments():
+    return render_template("comments.html")

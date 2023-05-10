@@ -17,7 +17,7 @@ def create_user_posts(user_id, db):
     db.execute(query)
 
 def create_user_comments(user_id, db):
-    query = f"CREATE TABLE comments_{user_id} (comment_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, theme TEXT NOT NULL, post_id INTEGER UNIQUE NOT NULL, points_possible INTEGER, points_reached INTEGER, noticeable TEXT DEFAULT '', to_improve TEXT DEFAULT '', strategys TEXT DEFAULT '')"
+    query = f"CREATE TABLE comments_{user_id} (comment_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, post_id INTEGER UNIQUE NOT NULL, points_possible INTEGER, points_reached INTEGER, noticeable TEXT DEFAULT '', to_improve TEXT DEFAULT '', strategys TEXT DEFAULT '')"
     db.execute(query)
 
 class SQLite:

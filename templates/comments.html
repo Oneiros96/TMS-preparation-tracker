@@ -4,9 +4,11 @@
     Index
 {% endblock %}
 
+
 {% block main %}
 <table class="table-bordered table-dark justify-content-center">
     <tr>
+        <th>Post_ID</th>
         <th>Datum</th>
         <th>Thema</th>
         <th>Punkte</th>
@@ -14,5 +16,36 @@
         <th>Verbesserungsmöglichkeiten</th>
         <th>Strategien</th>
     </tr>
+    {% for post in data %}
+        <tr>
+            <td>{{ post["post_id"] }}</td>
+            <td>{{ post["day"] }}</td>
+            <td>{{ post["thema"] }}</td>
+            <td>{{ post["points_reached"] }}/{{ post["points_possible"] }}</td>
+            <td>{{ post["noticeable"] }}</td>
+            <td>{{ post["to_improve"] }}</td>
+            <td>{{ post["strategys"] }}</td>
+        </tr>
+    {% endfor %}
 </table>
+{% if alert %}    
+    <div class="alert alert-danger" role="alert">
+    {{ alert }}
+    </div>    
+{% endif %}
+<form method="post" action="/comments" >
+    <select class="btn dropdown-toggle" name="post_id" style="background-color: #3bab82;">
+        <option selected hidden>Wähle einen Post</option>
+        {% for post in data %}
+        <option> {{ post["post_id"] }}</option>
+        {% endfor %}
+    </select>
+    <input type="text" id="points_reached" name="points_reached" value="erreichte Punkte" style="background-color: #3bab82;">
+    <input type="text" id="points_possible" name="points_possible" value="mögliche Punkte" style="background-color: #3bab82;">
+    <input type="text" id="noticeable" name="noticeable" value="Auffäligkeiten" style="background-color: #3bab82;">
+    <input type="text" id="to_improve" name="to_improve" value="Verbesserungsmöglichkeiten" style="background-color: #3bab82;">
+    <input type="text" id="strategys"  name="strategys" value="Strategien" style="background-color: #3bab82;">
+    <input type="submit" class="btn" style="background-color: #3bab82;" value="Eintragen">
+</form>
+    
 {% endblock %}

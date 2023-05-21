@@ -57,4 +57,16 @@ def submit_post(userinput):
          return False, "Bitte wähle die Art der übung."
     else:
         return True, ""
-         
+def submit_comment(userinput, posts):
+    print(userinput)
+    print(posts)
+    for post in posts: 
+        if post["post_id"] == int(userinput["post_id"]):
+            break
+    else: 
+        return False, "Bitte wähle eine vergebene Post_ID"
+    return True, ""
+
+
+
+

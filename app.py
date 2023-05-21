@@ -123,7 +123,39 @@ def logout():
     session.clear()
     return redirect("/")
 
-@app.route("/comments")
+@app.route("/comments", methods=["GET", "POST"])
 @login_required
 def comments():
-    return render_template("comments.html")
+    user_posts_table = f"posts_{session['user_id']}"
+    
+    user_comments_table = f"comments_{session['user_id']}"
+    user_posts = db.execute(f"SELECT post_id, day, thema  FROM {user_posts_table}")
+    
+    if not request.method == "POST":
+        
+        for post in user_posts:
+            comment = db.execute(f"SELECT * FROM {user_comments_table} WHERE post_id = ?", (post['post_id'],))
+            if comment:
+                post.update(comment[0])
+        print(user_posts)
+        return render_template("comments.html", data=user_posts)
+    
+    if request.method == "POST":
+        
+        valid_input, alert_message = validate.submit_comment(request.form, user_posts)
+        if not valid_input:
+           
+            for post in user_posts:
+                comment = db.execute(f"SELECT * FROM {user_comments_table} WHERE post_id = ?", (post['post_id'],))
+                if comment:
+                    post.update(comment[0])
+            return render_template("comments.html", data=user_posts, alert=alert_message )
+        
+        db.execute(f"INSERT INTO {user_comments_table} (post_id, points_reached, points_possible, noticeable, to_improve, strategys) VALUES(?, ?, ?, ?, ?, ?)", (request.form["post_id"], request.form["points_reached"], request.form["points_possible"], request.form["noticeable"], request.form["to_improve"], request.form["strategys"]))
+        
+       
+        for post in user_posts:
+                comment = db.execute(f"SELECT * FROM {user_comments_table} WHERE post_id = ?", (post['post_id'],))
+                if comment:
+                    post.update(comment[0])
+        return render_template("comments.html", data=user_posts)

@@ -1,6 +1,6 @@
 import os
 import python.database as database
-import datetime
+
 
 
 def login(userinput):
@@ -12,7 +12,6 @@ def login(userinput):
         return True, ""
 
 def register(userinput):
-
     if not userinput["username"]:
         return False, "Bitte wähle einen Username."    
     if not userinput["password"]:

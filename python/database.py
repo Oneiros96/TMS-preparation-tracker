@@ -13,10 +13,12 @@ def create_users(db):
 
 def create_user_posts(user_id, db):
     """ create user specific posts table """
+
     query = f"CREATE TABLE posts_{user_id} (post_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, thema TEXT NOT NULL, start TIME NOT NULL, end TIME NOT NULL, type TEXT NOT NULL, day DATE NOT NULL)"
     db.execute(query)
 
 def create_user_comments(user_id, db):
+    """ create user specific comments table """
     query = f"CREATE TABLE comments_{user_id} (comment_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, post_id INTEGER UNIQUE NOT NULL, points_possible INTEGER, points_reached INTEGER, noticeable TEXT DEFAULT '', to_improve TEXT DEFAULT '', strategys TEXT DEFAULT '')"
     db.execute(query)
 
@@ -30,7 +32,7 @@ class SQLite:
 
     def connect(self):
         self.connection = sqlite3.connect(self.database_file)
-        # TODO implement log instead of print
+        # print executed query's to console
         self.connection.set_trace_callback(print)
     
 

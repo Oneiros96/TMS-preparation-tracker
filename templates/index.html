@@ -6,18 +6,17 @@
 
 {% block script %}
 <script>
-  // Get the table element
-  const table = document.getElementById("user_table");
-console.log(table)
-  // Get all the table cells
-  const cells = table.getElementsByTagName("td");
+    // Get the table element
+    const table = document.getElementById("user_table");
+    // Get all the table cells
+    const cells = table.getElementsByTagName("td");
 
-  // Loop through all the cells and apply CSS if they are empty
-  for (let i = 0; i < cells.length; i++) {
-    if (cells[i].innerHTML.trim() === "") {
-      cells[i].style.backgroundColor = "#232323";
+    // Loop through all the cells and apply CSS if they are empty
+    for (let i = 0; i < cells.length; i++) {
+        if (cells[i].innerHTML.trim() === "") {
+            cells[i].style.backgroundColor = "#232323";
+        }
     }
-  }
 </script>
 {% endblock %}
 
@@ -32,17 +31,16 @@ console.log(table)
         <tr>
             <th>
                 <form action="/" method="post">
-                <input type="date" id="date" name="date" value="{{ date_value }}">
-                <button class="btn" style="background-color:#3bab82" type="submit">&#10003;</button>
+                <input type="date" id="date" name="date" value="{{ date_value }}" style="background-color:#3bab82; color:white ">
+                <button class="btn" style="background-color:#3bab82; color:white " type="submit">&#10003;</button>
                 </form>
             </th>
             {% for  day in date["day"] %}
             <th>{{ date["week_days"][loop.index0] }} {{ day }}.{{ date["month"][loop.index0] }}.</th>
             {% endfor %}
         </tr>
-      
     </thead>
-    <tbody style="color:black;">
+    <tbody>
         <tr style="background-color: #3bab82;">
             <td>Muster zuordnen</td>
             {% for date in date["date"] %}

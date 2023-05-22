@@ -2,4 +2,3 @@ __pycache__
 .venv
 flask_session
 project.db
-test.py

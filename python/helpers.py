@@ -1,8 +1,7 @@
 from functools import wraps
 from flask import session, redirect
-import calendar
 import datetime
-import logging
+
 
 def login_required(f):
     """

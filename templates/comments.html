@@ -6,7 +6,7 @@
 
 
 {% block main %}
-<table class="table-bordered table-dark justify-content-center">
+<table class="table-bordered table-dark justify-content-center centered-table">
     <tr style="background-color: #3bab82;">
         <th>Post_ID</th>
         <th>Datum</th>
@@ -40,6 +40,8 @@
     {{ alert }}
     </div>    
 {% endif %}
+<br>
+<p>Kommentar hinzufügen</p>
 <form method="post" action="/comments" >
     <select class="btn dropdown-toggle" name="post_id" style="background-color: #3bab82;">
         <option selected hidden>Wähle einen Post</option>
@@ -47,11 +49,24 @@
         <option> {{ post["post_id"] }}</option>
         {% endfor %}
     </select>
-    <input type="text" id="points_reached" name="points_reached" value="erreichte Punkte" style="background-color: #3bab82;">
-    <input type="text" id="points_possible" name="points_possible" value="mögliche Punkte" style="background-color: #3bab82;">
-    <input type="text" id="noticeable" name="noticeable" value="Auffäligkeiten" style="background-color: #3bab82;">
-    <input type="text" id="to_improve" name="to_improve" value="Verbesserungsmöglichkeiten" style="background-color: #3bab82;">
-    <input type="text" id="strategys"  name="strategys" value="Strategien" style="background-color: #3bab82;">
+    <br>
+    <br>
+    <label>mögliche Punkte</label>
+    <input type="number" id="points_reached" name="points_reached" style="background-color: #3bab82;">
+    <label>erreichte Punkte</label>
+    <input type="number" id="points_possible" name="points_possible" style="background-color: #3bab82;">
+    <br>
+    <br>
+    <label>Auffäligkeiten</label>
+    <input type="text" id="noticeable" name="noticeable" style="background-color: #3bab82;">
+    
+    <label>Verbesserungsmöglichkeiten</label>
+    <input type="text" id="to_improve" name="to_improve"  style="background-color: #3bab82;">
+   
+    <label>Strategien</label>
+    <input type="text" id="strategys"  name="strategys" style="background-color: #3bab82;">
+    <br>
+    <br>
     <input type="submit" class="btn" style="background-color: #3bab82;" value="Eintragen">
 </form>
     

@@ -1,4 +1,4 @@
-# TMS - preperation progress organizer
+# TMS - preparation tracker
 
 ## W.I.P - not much to see in this repo right now
 

@@ -7,7 +7,7 @@
 
 {% block main %}
 <table class="table-bordered table-dark justify-content-center">
-    <tr>
+    <tr style="background-color: #3bab82;">
         <th>Post_ID</th>
         <th>Datum</th>
         <th>Thema</th>
@@ -15,16 +15,23 @@
         <th>Auffäligkeiten</th>
         <th>Verbesserungsmöglichkeiten</th>
         <th>Strategien</th>
+        <th>Kommentar löschen</th>
     </tr>
     {% for post in data %}
         <tr>
-            <td>{{ post["post_id"] }}</td>
+            <td style="background-color: #3bab82;">{{ post["post_id"] }}</td>
             <td>{{ post["day"] }}</td>
             <td>{{ post["thema"] }}</td>
             <td>{{ post["points_reached"] }}/{{ post["points_possible"] }}</td>
             <td>{{ post["noticeable"] }}</td>
             <td>{{ post["to_improve"] }}</td>
             <td>{{ post["strategys"] }}</td>
+            <td>
+                <form method="post" action="/delete_comment">
+                    <input type="submit" class="btn"  value="🗑️">
+                    <input type="hidden" name="post_id" value="{{ post['post_id'] }}">
+                </form>
+            </td>
         </tr>
     {% endfor %}
 </table>

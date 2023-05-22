@@ -142,6 +142,8 @@ console.log(table)
     </tbody>
 </table>
 <div class="container-fluid">
+    <br>
+    <p>Übung hinzufügen</p>
     <form method="post" action="/submit_post">   
         <select class="btn dropdown-toggle" name="thema" id="thema" style="background-color: #3bab82;">
             <option selected hidden>Wähle ein Thema</option>
@@ -162,10 +164,25 @@ console.log(table)
             <option>Video/Meeting</option>
             <option>Bootcamp</option>
         </select>
+        <label>Start:</label> 
         <input type="time" id="start" name="start" style="background-color: #3bab82;">
+        <label>Ende:</label>
         <input type="time" id="end" name="end" style="background-color: #3bab82;">
-        <input type="date" id="day" name="day" style="background-color: #3bab82";>
+        <label>Tag:</label>
+        <input type="date" id="day" name="day" style="background-color: #3bab82;">
         <input type="submit" class="btn" style="background-color: #3bab82;" value="Eintragen">
+    </form>
+    <br>
+    <p>Übung löschen</p>
+    <form method="post" action="/delete_post">
+        <select name="post_id" class="btn dropdown-toggle" style="background-color: #3bab82;">
+        <option selected hidden>Wähle eine Übung</option>
+        {% for post in user_posts %}
+        <option value="{{ post['post_id'] }}">{{ post["day"] }} {{ post["thema"] }} {{ post["type"] }}</option>
+        
+        {% endfor %}
+        </select>
+        <input type="submit" class="btn"  value="🗑️" style="background-color: #3bab82;">
     </form>
 </div>
 {% endblock %}

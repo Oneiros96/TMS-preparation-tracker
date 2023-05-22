@@ -65,6 +65,13 @@ def submit_post():
     
     return redirect("/")
 
+@app.route("/delete_post", methods=["POST"])
+@login_required
+def delete_post():
+    user_posts_table = f"posts_{session['user_id']}"
+    db.execute(f"DELETE FROM {user_posts_table} WHERE post_id = ?", (request.form['post_id'],))
+    return redirect("/")
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """ Log user in """
@@ -142,7 +149,7 @@ def comments():
     
     if request.method == "POST":
         
-        valid_input, alert_message = validate.submit_comment(request.form, user_posts)
+        valid_input, alert_message = validate.submit_comment(request.form, user_posts, user_comments_table)
         if not valid_input:
            
             for post in user_posts:
@@ -159,3 +166,9 @@ def comments():
                 if comment:
                     post.update(comment[0])
         return render_template("comments.html", data=user_posts)
+@app.route("/delete_comment", methods=["POST"])
+@login_required
+def delete_comment():
+    user_comments_table = f"comments_{session['user_id']}"
+    db.execute(f"DELETE FROM {user_comments_table} WHERE post_id = ?", (request.form["post_id"],))
+    return redirect("/comments")

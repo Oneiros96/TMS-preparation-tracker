@@ -21,7 +21,6 @@ def register(userinput):
             return False, "Passwort und Bestätigung müssen überein stimmen."
     
     db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "project.db")
-    print
     db = database.SQLite(db_path)
     if db.execute("SELECT username FROM users WHERE username = ?", (userinput["username"],)):            
             return False, "Username nicht verfügbar."
@@ -57,14 +56,17 @@ def submit_post(userinput):
          return False, "Bitte wähle die Art der übung."
     else:
         return True, ""
-def submit_comment(userinput, posts):
-    print(userinput)
-    print(posts)
+def submit_comment(userinput, posts, comments_table):
+    db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "project.db")
+    db = database.SQLite(db_path)
     for post in posts: 
         if post["post_id"] == int(userinput["post_id"]):
             break
     else: 
-        return False, "Bitte wähle eine vergebene Post_ID"
+        return False, "Bitte wähle eine vergebene Post_ID."
+    
+    if db.execute(f"SELECT * FROM {comments_table} WHERE post_id = {int(userinput['post_id'])}"):
+        return False, "Nur ein Kommentar je Post."
     return True, ""
 
 

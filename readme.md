@@ -17,6 +17,7 @@ This app can be used by individual Students or by course providers to supply the
 2. Übersicht: Upon logging you will be redirected to the Übersicht page, where you are provided with a weekly dashboard to which you can add your learning session
 3. Kommentare: Here you can add comments to evry kearning session posted on Übersicht
 4. Logout: End your current session an return to the login page
+### Video Demo: https://youtu.be/NMI1HUBIP3Q
 
 ## Used technology
 

@@ -48,4 +48,4 @@ This app can be used by individual Students or by course providers to supply the
 /requirements.txt  created with pip freeze to easily recreated the venv used in production
 
 ## License
-The TMS Preparation Tracker is licensed under the MIT License. Feel free to use, modify, and distribute the software as permitted by the license.
+The TMS Preparation Tracker is licensed under the [MIT License](https://github.com/Oneiros96/TMS-preparation-tracker/blob/main/LICENSE). Feel free to use, modify, and distribute the software as permitted by the license.

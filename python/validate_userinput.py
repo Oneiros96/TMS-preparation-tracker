@@ -28,7 +28,7 @@ def register(userinput):
 
 def submit_post(userinput):
     themas = ("Muster zuordnen",
-              "Quantitative und formlae Probleme",
+              "Quantitative und formale Probleme",
               "Schlauchfiguren",
               "Med./Naturw. Grundverständnis",
               "Figuren lernen",

@@ -21,13 +21,13 @@ This app can be used by individual Students or by course providers to supply the
 
 ## Used technology
 
--python 3.11
--Flask 2.2.3
--Flask-Session 0.4.0
--html
--CSS /  Bootstrap 5.1
--JS
--jinja 2
+- python 3.11
+- Flask 2.2.3
+- Flask-Session 0.4.0
+- html
+- CSS /  Bootstrap 5.1
+- JS
+- jinja 2
 
 ## Files
 /app.py Contains the main logic for the backend. Which includes to call funktions for database connection and if runned the first time setup, session setup and the callable routes

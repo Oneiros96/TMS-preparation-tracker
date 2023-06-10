@@ -1,5 +1,7 @@
 # TMS - preparation tracker
 
+### *currently this it's required to use 24h time format and dd/mm/yyyy settings in the browser for corract funktionally. Will be fixed* ###
+
 Welcome to the TMS - preparation tracker repository!
 This webapp created with python and Flask aims to provide an easy solution to track learning sessions and make comments for each of them, 
 while preparing for the german TMS(Test für Medizinische Studiengänge).
